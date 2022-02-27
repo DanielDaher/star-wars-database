@@ -4,6 +4,7 @@ import RequisitionContext from './RequisitionContext';
 
 export default function RequisitionProvider({ children }) {
   const [data, setData] = useState([]);
+  const [planetName, setPlanetName] = useState('');
 
   useEffect(() => {
     const planets = async () => {
@@ -20,6 +21,8 @@ export default function RequisitionProvider({ children }) {
     data,
     filters: {
       filterByName: {
+        name: planetName,
+        setPlanetName,
       },
     },
   };

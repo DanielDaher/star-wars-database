@@ -1,18 +1,35 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import RequisitionContext from '../Context/RequisitionContext';
 
 export default function Table() {
-  const { data } = useContext(RequisitionContext);
+  const { data, filters } = useContext(RequisitionContext);
   const [tablePlanets, setTablePlanets] = useState([]);
   const [columnNames, setColumnNames] = useState([]);
+  const allPlanets = useRef();
 
   useEffect(() => {
     setTablePlanets(data);
+
     const arrayWithColumnNames = data.map(
-      (planet) => Object.entries(planet).filter((keyName) => keyName[0] !== 'residents'),
-    )
+      (planet) => Object.entries(planet).filter((keyName) => keyName[0] !== 'residents')
+    );
+
     setColumnNames(arrayWithColumnNames[0]);
+    allPlanets.current = data;
   }, [data]);
+
+  useEffect(() => {
+    const { filterByName: { name } } = filters;
+
+    if (name !== '') {
+      const filteredPlanets = allPlanets.current
+      .filter((planet) => planet.name.includes(name.toLowerCase())
+      );
+      setTablePlanets(filteredPlanets);
+    };
+
+    if (name === '') return setTablePlanets(allPlanets.current);
+  }, [filters]);
 
   return (
     <table>
