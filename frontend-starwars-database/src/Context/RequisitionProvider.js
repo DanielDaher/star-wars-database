@@ -10,6 +10,7 @@ export default function RequisitionProvider({ children }) {
       const getSWInfo = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
       const { results } = await getSWInfo.json();
       setData(results);
+      console.log(results);
       /* setTableData(results); */
     };
     planets();
