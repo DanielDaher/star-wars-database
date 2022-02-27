@@ -5,9 +5,10 @@ export default function Table() {
   const { data, filters } = useContext(RequisitionContext);
   const [tablePlanets, setTablePlanets] = useState([]);
   const [columnNames, setColumnNames] = useState([]);
-  const allPlanets = useRef();
+  const currentPlanets = useRef();
 
   useEffect(() => {
+    console.log('TABLE')
     setTablePlanets(data);
 
     const arrayWithColumnNames = data.map(
@@ -15,27 +16,49 @@ export default function Table() {
     );
 
     setColumnNames(arrayWithColumnNames[0]);
-    allPlanets.current = data;
+    currentPlanets.current = data;
   }, [data]);
 
   useEffect(() => {
-    const { filterByName: { name } } = filters;
+    const { filterByName: { name }, filterByNumericValues } = filters;
+
+    if (filterByNumericValues.length > 0) {
+      filterByNumericValues.forEach(({ column, comparison, value }) => {
+        switch (comparison) {
+          case ('maior que'):
+            currentPlanets.current = currentPlanets.current
+              .filter((planet) => Number(planet[column]) > Number(value));
+            break;
+          case ('menor que'):
+            currentPlanets.current = currentPlanets.current
+              .filter((planet) => Number(planet[column]) < Number(value));
+            break;
+          case ('igual a'):
+            currentPlanets.current = currentPlanets.current
+              .filter((planet) => Number(planet[column]) === Number(value));
+            break;
+          default:
+            break;
+        }
+      });
+      setTablePlanets(currentPlanets.current);
+    }
 
     if (name !== '') {
-      const filteredPlanets = allPlanets.current
+      const filteredPlanets = currentPlanets.current
       .filter((planet) => planet.name.includes(name.toLowerCase())
       );
       setTablePlanets(filteredPlanets);
     };
 
-    if (name === '') return setTablePlanets(allPlanets.current);
+    if (name === '') return setTablePlanets(currentPlanets.current);
   }, [filters]);
 
   return (
     <table>
       <thead>
         <tr>
-          {tablePlanets.length > 0 &&
+          {columnNames &&
             columnNames.map((planet, index) => <th key={ index }>{planet[0]}</th>)}
         </tr>
       </thead>
