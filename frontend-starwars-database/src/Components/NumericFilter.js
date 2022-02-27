@@ -1,23 +1,36 @@
 import React, { useContext, useState } from 'react';
 import RequisitionContext from '../Context/RequisitionContext';
+import ActiveFilters from './ActiveFilters';
 
 export default function NumericFilter() {
   const {
     filters:
-    { setFilterOn,
-      filterByNumericValues,
+    { filterByNumericValues,
       setFilterByNumericValues }
   } = useContext(RequisitionContext);
   
   const [columnOptions, setColumnOptions] = useState([
-    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+    'diameter', 'orbital_period', 'population', 'rotation_period', 'surface_water',
   ]);
+
+  const [currentColumnValue, setCurrentColumnValue] = useState('diameter');
 
   const [formState, setFormState] = useState({
     column: columnOptions[0],
     comparison: 'maior que',
     value: '',
   });
+
+  const repopulateColumnOptions = (columnName) => {
+    const orderedColumns = [...columnOptions, columnName].sort()
+    setColumnOptions(orderedColumns);
+    console.log(orderedColumns)
+    setFormState({
+      ...formState,
+      column: orderedColumns[0],
+    });
+    setCurrentColumnValue(orderedColumns[0])
+  };
 
   const makeOptions = () => columnOptions
       .map((opt, index) => <option value={ opt } key={ index }>{opt}</option>);
@@ -28,45 +41,51 @@ export default function NumericFilter() {
       ...formState,
       [id]: selectValue,
     });
+    setCurrentColumnValue(selectValue);
   };
 
   const dispatchFilter = (event) => {
     event.preventDefault();
-    setFilterByNumericValues([...filterByNumericValues ,formState]);
-    setFilterOn(true);
-    setColumnOptions(columnOptions.filter((opt) => opt !== formState.column));
+    setFilterByNumericValues([...filterByNumericValues, formState]);
+    const newColumnsSorted = columnOptions.filter((opt) => opt !== formState.column).sort();
+    setColumnOptions(newColumnsSorted);
     setFormState({
       ...formState,
-      column: columnOptions[1],
+      column: newColumnsSorted[0],
     });
+    setCurrentColumnValue(newColumnsSorted[0]);
   };
 
   return (
-    <form onSubmit={ (e) => dispatchFilter(e) }>
-      <select
-        data-testid="column-filter"
-        id="column"
-        onChange={ (e) => formHandleChange(e) }
-      >
-       {makeOptions()}
-      </select>
-      <select
-        data-testid="comparison-filter"
-        id="comparison"
-        onChange={ (e) => formHandleChange(e) }
-      >
-        <option value="maior que">maior que</option>
-        <option value="menor que">menor que</option>
-        <option value="igual a">igual a</option>
-      </select>
-      <input
-        type="number"
-        placeholder="insira o valor"
-        data-testid="value-filter"
-        id="value"
-        onChange={ (e) => formHandleChange(e) }
-      />
-      <button type="submit" data-testid="button-filter">Filtrar</button>
-    </form>
+    <div>
+      <ActiveFilters repopulateColumnOptions={repopulateColumnOptions} />
+      <form onSubmit={ (e) => dispatchFilter(e) }>
+        <select
+          data-testid="column-filter"
+          id="column"
+          value={currentColumnValue}
+          onChange={ (e) => formHandleChange(e) }
+        >
+        {makeOptions()}
+        </select>
+        <select
+          data-testid="comparison-filter"
+          id="comparison"
+          onChange={ (e) => formHandleChange(e) }
+        >
+          <option value="maior que">maior que</option>
+          <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
+        </select>
+        <input
+          type="number"
+          placeholder="insira o valor"
+          data-testid="value-filter"
+          id="value"
+          onChange={ (e) => formHandleChange(e) }
+        />
+        <button type="submit" data-testid="button-filter">Filtrar</button>
+      </form>
+    </div>
   );
 }

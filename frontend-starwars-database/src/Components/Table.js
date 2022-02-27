@@ -2,13 +2,12 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import RequisitionContext from '../Context/RequisitionContext';
 
 export default function Table() {
-  const { data, filters } = useContext(RequisitionContext);
+  const { data, filters, filteredExcluded } = useContext(RequisitionContext);
   const [tablePlanets, setTablePlanets] = useState([]);
   const [columnNames, setColumnNames] = useState([]);
   const currentPlanets = useRef();
 
   useEffect(() => {
-    console.log('TABLE')
     setTablePlanets(data);
 
     const arrayWithColumnNames = data.map(
@@ -17,12 +16,12 @@ export default function Table() {
 
     setColumnNames(arrayWithColumnNames[0]);
     currentPlanets.current = data;
-  }, [data]);
+  }, [data, filteredExcluded]);
 
   useEffect(() => {
     const { filterByName: { name }, filterByNumericValues } = filters;
 
-    if (filterByNumericValues.length > 0) {
+    if (filterByNumericValues) {
       filterByNumericValues.forEach(({ column, comparison, value }) => {
         switch (comparison) {
           case ('maior que'):
@@ -41,12 +40,13 @@ export default function Table() {
             break;
         }
       });
+
       setTablePlanets(currentPlanets.current);
     }
 
     if (name !== '') {
       const filteredPlanets = currentPlanets.current
-      .filter((planet) => planet.name.includes(name.toLowerCase())
+      .filter((planet) => planet.name.toLowerCase().includes(name.toLowerCase())
       );
       setTablePlanets(filteredPlanets);
     };

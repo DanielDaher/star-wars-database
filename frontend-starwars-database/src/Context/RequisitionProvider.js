@@ -5,7 +5,7 @@ import RequisitionContext from './RequisitionContext';
 export default function RequisitionProvider({ children }) {
   const [data, setData] = useState([]);
   const [planetName, setPlanetName] = useState('');
-  const [filterOn, setFilterOn] = useState(false);
+  const [filteredExcluded, setFilteredExcluded] = useState(false);
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
 
   useEffect(() => {
@@ -14,18 +14,18 @@ export default function RequisitionProvider({ children }) {
       const { results } = await getSWInfo.json();
       setData(results);
       console.log(results);
-      /* setTableData(results); */
     };
     planets();
   }, []);
 
   const contextValue = {
     data,
+    setData,
+    filteredExcluded,
+    setFilteredExcluded,
     filters: {
       filterByNumericValues,
       setFilterByNumericValues,
-      filterOn,
-      setFilterOn,
       filterByName: {
         name: planetName,
         setPlanetName,
