@@ -5,11 +5,13 @@ export default function FilterByName() {
   const { filters: { filterByName: { setPlanetName } } } = useContext(RequisitionContext);
 
   return (
-    <input
-      placeholder="pesquise por nome"
-      data-testid="name-filter"
-      type="text"
-      onChange={ (e) => setPlanetName(e.target.value) }
-    />
+    <div className='name-filter'>
+      <input
+        placeholder="pesquise por nome"
+        data-testid="name-filter"
+        type="text"
+        onChange={ (e) => setPlanetName(e.target.value) }
+      />
+    </div>
   );
 }

@@ -16,11 +16,15 @@ export default function ActiveFilters({ repopulateColumnOptions }) {
   };
 
   return (
-  <div>
+  <div className="active-filters-div">
     {filterByNumericValues.map(({ column, comparison, value }, index) => (
-      <div key={index} style={{ display: 'flex' }}>
+      <div key={index} className="filters"/* style={{ display: 'flex' }} */>
         <h3>{column} {comparison} {value} </h3>
         <button onClick={() => removeFilter(column, index)}>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
             X
         </button>
       </div>

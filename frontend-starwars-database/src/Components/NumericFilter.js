@@ -84,7 +84,13 @@ export default function NumericFilter() {
           id="value"
           onChange={ (e) => formHandleChange(e) }
         />
-        <button type="submit" data-testid="button-filter">Filtrar</button>
+        <button type="submit" data-testid="button-filter">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+          Filtrar
+        </button>
       </form>
     </div>
   );
