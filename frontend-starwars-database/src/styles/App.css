@@ -123,7 +123,7 @@ button:hover {
   box-shadow: 0 0 8px #ae00ff, 0 0 8px #001eff, 0 0 8px #ae00ff;
   color: silver;
   overflow-x: auto;
-  margin: 20px;
+  margin: 40px;
   width: 130vw;
   padding: 0px;
 }
