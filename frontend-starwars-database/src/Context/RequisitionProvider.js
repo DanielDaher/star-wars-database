@@ -10,10 +10,15 @@ export default function RequisitionProvider({ children }) {
 
   useEffect(() => {
     const planets = async () => {
-      const getSWInfo = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
-      const { results } = await getSWInfo.json();
-      setData(results);
-      console.log(results);
+      try {
+        const getSWInfo = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
+        const { results } = await getSWInfo.json();
+        setData(results);
+        console.log(results);
+      } catch (error) {
+        console.error(error);
+        setData(['Erro']);
+      }
     };
     planets();
   }, []);

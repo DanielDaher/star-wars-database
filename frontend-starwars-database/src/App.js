@@ -4,6 +4,7 @@ import FilterByName from './Components/FilterByName';
 import NumericFilter from './Components/NumericFilter';
 import Table from './Components/Table';
 import RequisitionProvider from './Context/RequisitionProvider';
+import LoadingOrErrorAPI from './Components/LoadingOrErrorAPI';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <div className='App'>
         <FilterByName />
         <NumericFilter />
+        <LoadingOrErrorAPI />
         <div className='tableDiv'>
           <Table />
         </div>

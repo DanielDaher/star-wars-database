@@ -123,17 +123,19 @@ button:hover {
   box-shadow: 0 0 8px #ae00ff, 0 0 8px #001eff, 0 0 8px #ae00ff;
   color: silver;
   overflow-x: auto;
-  margin: 40px;
+  margin: 50px;
   width: 130vw;
   padding: 0px;
 }
 
 td {
   margin: 10px;
+  min-height: 100px;
 }
 
 th {
   box-shadow: 0 0 8px #ae00ff, 0 0 8px #001eff, 0 0 8px #ae00ff;
+  height: 50px;
 }
 
 th, td {
@@ -141,8 +143,8 @@ th, td {
   border-left: 1px solid #001eff; */
   /* box-shadow: 0 0 8px #ae00ff, 0 0 8px #001eff, 0 0 8px #ae00ff; */
   margin: 10px;
-  width: 100px;
   overflow: auto;
+  width: 100px;
 }
 
 th:hover, td:hover {
