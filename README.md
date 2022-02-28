@@ -2,6 +2,10 @@
 
 Boas vindas ao projeto Star Wars Database!
 
+Para visualizar o deploy da aplicação, clique [aqui](https://star-wars-database-danieldaher.vercel.app/).
+
+Caso prefira rodar o projeto em sua máquina, basta clonar o repositório, navegar até a pasta `frontend-starwars-database` e rodar o comando `npm start`.
+
 ## O QUE DEVERÁ SER DESENVOLVIDO
 
 Você vai desenvolver uma lista com filtros de planetas do universo de StarWars usando **React** para a construção do front-end e **Context API e Hooks** para controlar os estados globais.
