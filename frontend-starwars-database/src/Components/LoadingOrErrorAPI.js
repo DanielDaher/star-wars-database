@@ -8,7 +8,7 @@ export default function LoadingOrErrorAPI() {
   const RenderLightSabers = () => {
     const colors = ['red', 'blue', 'green', 'purple', 'yellow'];
     return colors
-      .map((color) => <GiLightSabers style={{ width: '100px', height: '100px', color }} />)
+      .map((color, index) => <GiLightSabers key={index} style={{ width: '100px', height: '100px', color }} />)
   };
 
   if (data.length < 1) return (

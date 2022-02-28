@@ -79,7 +79,7 @@ export default function Table() {
           url,
         }) => (
           <tr key={ name }>
-            <td>{ name }</td>
+            <td data-testid="planet-name">{ name }</td>
             <td>{ rotation }</td>
             <td>{ orbit }</td>
             <td>{ diameter }</td>
